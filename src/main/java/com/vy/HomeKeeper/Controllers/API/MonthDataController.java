@@ -3,6 +3,7 @@ package com.vy.HomeKeeper.Controllers.API;
 import com.vy.HomeKeeper.Domain.MonthCalculation;
 import com.vy.HomeKeeper.Domain.MonthData;
 import com.vy.HomeKeeper.Repo.MonthDataRepo;
+import com.vy.HomeKeeper.Repo.TariffsRepo;
 import com.vy.HomeKeeper.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,12 @@ import java.util.List;
 public class MonthDataController {
 
     private final MonthDataRepo monthDataRepo;
+    private final TariffsRepo tariffsRepo;
 
     @Autowired
-    public MonthDataController(MonthDataRepo monthDataRepo) {
+    public MonthDataController(MonthDataRepo monthDataRepo, TariffsRepo tariffsRepo) {
         this.monthDataRepo = monthDataRepo;
+        this.tariffsRepo = tariffsRepo;
     }
 
     @PostMapping("api/monthdata/add")
@@ -68,7 +71,7 @@ public class MonthDataController {
 
     @GetMapping("api/monthdata/getCalc")
     public MonthCalculation getMonthCalc(@RequestParam String id) {
-        return Utils.Calculator.calculate(monthDataRepo.getById(id), monthDataRepo);
+        return Utils.Calculator.calculate(monthDataRepo.getById(id), monthDataRepo, tariffsRepo);
     }
 
     @GetMapping("api/monthdata/getPrev")
