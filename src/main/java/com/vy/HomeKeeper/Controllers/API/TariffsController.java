@@ -23,9 +23,9 @@ public class TariffsController {
     }
 
     @GetMapping("api/tariffs/getByDate")
-    public Tariffs getByDate(@RequestParam String year, @RequestParam Integer month) {
-        int halfOfYear = month <= 6 ? 1 : 2;
-        return tariffsRepo.findByYearAndHalfOfYear(year, month.toString());
+    public Tariffs getByDate(@RequestParam Long year, @RequestParam Long month) {
+        Long halfOfYear = month <= 6L ? 1L : 2L;
+        return tariffsRepo.findByYearAndHalfOfYear(year, halfOfYear);
     }
 
     @GetMapping("api/tariffs/getall")
