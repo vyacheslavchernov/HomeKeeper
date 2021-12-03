@@ -15,6 +15,17 @@ let prevTotal;
 let totalCommunal
 let prevTotalCommunal
 
+document.getElementById("modalBillCopy").addEventListener("click", event => {
+    const el = document.createElement("textarea");
+    let billText = document.getElementById("billBody").innerHTML;
+    billText = billText.replace(/<br>/g, "\n")
+    el.value = billText
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+})
+
 function initCharts() { 
     // Communal chart
     const communalChartLabels = [
@@ -215,6 +226,7 @@ let monthOverview = new Vue({
                 toastLaunch("warning", "Ошибка", "", "Не удалось получить данные за текущий месяц!", "danger")
             })
     
+            document.getElementById("loadProgress").setAttribute("style", "width:"+ 16 +"%")
             await This.$http.get('/api/monthdata/getPrev', {params: {id: lastMonthData["id"]}}).then(response => {
                 prevMonthData = response.body
                 console.log(prevMonthData)
@@ -222,6 +234,7 @@ let monthOverview = new Vue({
                 toastLaunch("warning", "Ошибка", "", "Не удалось получить данные за прошлый месяц!", "danger")
             })
 
+            document.getElementById("loadProgress").setAttribute("style", "width:"+ 16*2 +"%")
             await This.$http.get('/api/monthdata/getPrev', {params: {id: prevMonthData["id"]}}).then(response => {
                 prevPrevMonthData = response.body
                 console.log(prevPrevMonthData)
@@ -229,6 +242,7 @@ let monthOverview = new Vue({
                 toastLaunch("warning", "Ошибка", "", "Не удалось получить данные за позапрошлый месяц!", "danger")
             })
     
+            document.getElementById("loadProgress").setAttribute("style", "width:"+ 16*3 +"%")
             await This.$http.get('/api/monthdata/getCalc', {params: {id: lastMonthData["id"]}}).then(response => {
                 lastCalcData = response.body
                 console.log(lastCalcData)
@@ -236,6 +250,7 @@ let monthOverview = new Vue({
                 toastLaunch("warning", "Ошибка", "", "Не удалось получить расчёт за текущий месяц!", "danger")
             })
     
+            document.getElementById("loadProgress").setAttribute("style", "width:"+ 16*4 +"%")
             await This.$http.get('/api/monthdata/getCalc', {params: {id: prevMonthData["id"]}}).then(response => {
                 prevCalcData = response.body
                 console.log(prevCalcData)
@@ -243,6 +258,7 @@ let monthOverview = new Vue({
                 toastLaunch("warning", "Ошибка", "", "Не удалось получить расчёт за прошлый месяц!", "danger")
             })
     
+            document.getElementById("loadProgress").setAttribute("style", "width:"+ 16*5 +"%")
             await This.$http.get(
                 '/api/tariffs/getByDate',
                 { params: { year: lastMonthData["year"], month: lastMonthData["month"] } })
@@ -254,6 +270,7 @@ let monthOverview = new Vue({
                 })
         }(this));
 
+        document.getElementById("loadProgress").setAttribute("style", "width:"+ 16*6 +"%")
         console.log("Данные загружены!")
 
         totalCommunal = lastCalcData["coldwater"] + lastCalcData["hotwater"] + lastCalcData["electricity"] + lastCalcData["drainage"];
@@ -382,14 +399,16 @@ let monthOverview = new Vue({
             },
             template: 
             '<div class="modal-body">'+
-                'Электроэнергия - {{lastCalcData["electricity"].toFixed(2)}}₽<br/>'+
-                'Горячая вода - {{lastCalcData["hotwater"].toFixed(2)}}₽<br/>'+
-                'Холодная вода - {{lastCalcData["coldwater"].toFixed(2)}}₽<br/>'+
-                'Водоотведение - {{lastCalcData["drainage"].toFixed(2)}}₽<br/><br/>'+
+                '<div id="billBody">'+
+                    'Электроэнергия - {{lastCalcData["electricity"].toFixed(2)}}₽<br/>'+
+                    'Горячая вода - {{lastCalcData["hotwater"].toFixed(2)}}₽<br/>'+
+                    'Холодная вода - {{lastCalcData["coldwater"].toFixed(2)}}₽<br/>'+
+                    'Водоотведение - {{lastCalcData["drainage"].toFixed(2)}}₽<br/><br/>'+
 
-                'Сумма - {{totalCommunal.toFixed(2)}}₽<br/><br/>'+
+                    'Сумма - {{totalCommunal.toFixed(2)}}₽<br/><br/>'+
 
-                'Итог - {{lastMonthData["rent"].toFixed(2)}}₽ + {{totalCommunal.toFixed(2)}}₽ = {{ (lastMonthData["rent"] + totalCommunal).toFixed(2) }}₽'+
+                    'Итог - {{lastMonthData["rent"].toFixed(2)}}₽ + {{totalCommunal.toFixed(2)}}₽ = {{ (lastMonthData["rent"] + totalCommunal).toFixed(2) }}₽'+
+                '</div>'+
             '</div>'
         })
     },
