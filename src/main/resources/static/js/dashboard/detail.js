@@ -174,16 +174,16 @@ function initCharts() {
 Vue.component('overview-card-row', {
     props: ['title', 'text', 'textEnding'],
     template: 
-    '<p class="lead row">'+
-        '<span class="col-9">{{title}}</span>'+
-        '<span class="badge bg-primary col-3">{{text}}{{textEnding}}</span>'+
+    '<p class="lead row ps-2 pe-2">'+
+        '<span class="col-xl-9">{{title}}</span>'+
+        '<span class="badge bg-light text-dark col-xl-3">{{text}}{{textEnding}}</span>'+
     '</p>'
 })
 
 Vue.component('overview-card', {
     props: ['header', 'cardData'],
     template: 
-        '<div class="col-6">'+
+        '<div class="col-xl-6 mt-3">'+
             '<div class="card shadow-lg" style="height:100%">'+
                 '<div class="card-header">{{header}}</div>'+
                 '<div class="card-body placeholder-glow">'+
@@ -266,133 +266,153 @@ let monthOverview = new Vue({
         console.log(total)
 
         this.mainCardData.push({
-            'title': "Сумма за месяц (с интернетом):",
+            'title': "Сумма за месяц (с интернетом)",
             'text': total.toFixed(2),
             'textEnding': rubChar
         })
         this.mainCardData.push({
-            'title': "Сумма за месяц (без интернета):",
+            'title': "Сумма за месяц (без интернета)",
             'text': (total - lastMonthData['ethernet']).toFixed(2),
             'textEnding': rubChar
         })
         this.mainCardData.push({
-            'title': "Из этого коммунальные услуги:",
+            'title': "Из этого коммунальные услуги",
             'text': totalCommunal.toFixed(2),
             'textEnding': rubChar
         })
         this.mainCardData.push({
-            'title': "На каждого платящего:",
+            'title': "На каждого платящего",
             'text': (total / lastMonthData["peoples"]).toFixed(2),
             'textEnding': rubChar
         })
 
 
         this.noncalcCardData.push({
-            'title': "Рента:",
+            'title': "Рента",
             'text': lastMonthData['rent'],
             'textEnding': rubChar
         })
         this.noncalcCardData.push({
-            'title': "Стоимость интернета:",
+            'title': "Стоимость интернета",
             'text': lastMonthData['ethernet'],
             'textEnding': rubChar
         })
         this.noncalcCardData.push({
-            'title': "Количество плательщиков:",
+            'title': "Количество плательщиков",
             'text': lastMonthData['peoples'],
             'textEnding': ''
         })
 
 
         this.communalCardData.push({
-            'title': "Электричество:",
+            'title': "Электричество",
             'text': lastCalcData['electricity'].toFixed(2),
             'textEnding': rubChar
         })
         this.communalCardData.push({
-            'title': "Горячая вода:",
+            'title': "Горячая вода",
             'text': lastCalcData['hotwater'].toFixed(2),
             'textEnding': rubChar
         })
         this.communalCardData.push({
-            'title': "Холодная вода:",
+            'title': "Холодная вода",
             'text': lastCalcData['coldwater'].toFixed(2),
             'textEnding': rubChar
         })
         this.communalCardData.push({
-            'title': "Водоотведение:",
+            'title': "Водоотведение",
             'text': lastCalcData['drainage'].toFixed(2),
             'textEnding': rubChar
         })
 
 
         this.countersCardData.push({
-            'title': "Электричество:",
+            'title': "Электричество",
             'text': lastMonthData['electricity'] + "(" + (lastMonthData['electricity'] - prevMonthData['electricity']) + ")",
             'textEnding': ''
         })
         this.countersCardData.push({
-            'title': "Горячая вода:",
+            'title': "Горячая вода",
             'text': lastMonthData['hotwater'] + "(" + (lastMonthData['hotwater'] - prevMonthData['hotwater']) + ")",
             'textEnding': ''
         })
         this.countersCardData.push({
-            'title': "Холодная вода:",
+            'title': "Холодная вода",
             'text': lastMonthData['coldwater'] + "(" + (lastMonthData['coldwater'] - prevMonthData['coldwater']) + ")",
             'textEnding': ''
         })
         this.countersCardData.push({
-            'title': "Водоотведение:",
+            'title': "Водоотведение",
             'text': (lastMonthData['hotwater'] - prevMonthData['hotwater']) + (lastMonthData['coldwater'] - prevMonthData['coldwater']),
             'textEnding': ''
         })
 
 
         this.tariffsCardData.push({
-            'title': "Электричество:",
+            'title': "Электричество",
             'text': tariffsData['electricity'].toFixed(2),
             'textEnding': rubChar
         })
         this.tariffsCardData.push({
-            'title': "Горячая вода:",
+            'title': "Горячая вода",
             'text': tariffsData['hotwater'].toFixed(2),
             'textEnding': rubChar
         })
         this.tariffsCardData.push({
-            'title': "Холодная вода:",
+            'title': "Холодная вода",
             'text': tariffsData['coldwater'].toFixed(2),
             'textEnding': rubChar
         })
         this.tariffsCardData.push({
-            'title': "Водоотведение:",
+            'title': "Водоотведение",
             'text': tariffsData['drainage'].toFixed(2),
             'textEnding': rubChar
         })
         
         initCharts()
+
+        const modalBill = new Vue({
+            el: "#modalBillComponent",
+            data: {
+                lastCalcData: lastCalcData,
+                lastMonthData: lastMonthData,
+                totalCommunal: totalCommunal
+            },
+            template: 
+            '<div class="modal-body">'+
+                'Электроэнергия - {{lastCalcData["electricity"].toFixed(2)}}₽<br/>'+
+                'Горячая вода - {{lastCalcData["hotwater"].toFixed(2)}}₽<br/>'+
+                'Холодная вода - {{lastCalcData["coldwater"].toFixed(2)}}₽<br/>'+
+                'Водоотведение - {{lastCalcData["drainage"].toFixed(2)}}₽<br/><br/>'+
+
+                'Сумма - {{totalCommunal.toFixed(2)}}₽<br/><br/>'+
+
+                'Итог - {{lastMonthData["rent"].toFixed(2)}}₽ + {{totalCommunal.toFixed(2)}}₽ = {{ (lastMonthData["rent"] + totalCommunal).toFixed(2) }}₽'+
+            '</div>'
+        })
     },
     template: 
-        '<div class="container">'+
-            '<div class="row p-5">'+
+        '<div class="container-xl mt-xl-5">'+
+            '<div class="row ps-xl-5 pe-xl-5">'+
                 '<overview-card header="Главные цифры" :cardData="this.mainCardData"/>'+
                 '<overview-card header="Нерасчётные значения" :cardData="this.noncalcCardData"/>'+
             '</div>'+
 
-            '<div class="row p-5">'+
+            '<div class="row ps-xl-5 pe-xl-5">'+
                 '<overview-card header="Коммунальные платежи" :cardData="this.communalCardData"/>'+
                 '<overview-card header="Счётчики" :cardData="this.countersCardData"/>'+
             '</div>'+
 
-            '<div class="row p-5">'+
+            '<div class="row ps-xl-5 pe-xl-5">'+
                 '<overview-card header="Тарифы" :cardData="this.tariffsCardData"/>'+
-                '<div class="col-6">'+
-                    '<div class="card shadow-lg">'+
+                '<div class="col-xl-6 mt-3">'+
+                    '<div class="card shadow-lg" style="width:100%;">'+
                         '<div class="card-header">'+
                             'Доступные действия'+
                         '</div>'+
                         '<ul class="list-group list-group-flush placeholder-glow">'+
                             '<li class="list-group-item">'+
-                                '<a href="404" class="card-link">Сформировать отчёт</a>'+
+                                '<a href="" data-bs-toggle="modal" data-bs-target="#ModalBill" class="card-link">Сформировать отчёт</a>'+
                             '</li>'+
     
                             '<li class="list-group-item">'+

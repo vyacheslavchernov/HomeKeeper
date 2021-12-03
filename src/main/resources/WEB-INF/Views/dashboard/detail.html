@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>HomeKeeper - Dashboard</title>
 
     <!-- версия для разработки, отображает полезные предупреждения в консоли -->
@@ -42,19 +44,19 @@
 
     <div id="month-overview"></div>
     
-    <div class="container">
-        <div class="p-5">
+    <div class="container-xl d-none d-xl-block">
+        <div class="ps-xl-5 pe-xl-5 pt-5" >
             <div class="card shadow-lg">
                 <div class="card-header">Сравнение с предыдущим месяцем</div>
                 <div class="card-body placeholder-glow">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-xl-6">
                             <div>
                                 <canvas id="communals"></canvas>
                             </div>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-xl-6">
                             <div>
                                 <canvas id="counters"></canvas>
                             </div>
@@ -72,6 +74,21 @@
             </div>
     </div>
     </div>
+
+    <!-- Modal для добавления нового расчёта-->
+<div class="modal fade" id="ModalBill" tabindex="-1" aria-labelledby="ModalBillLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalBillLabel">Отчёт для отправки</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="modalBillComponent">
+                
+            </div>
+        </div>
+    </div>
+</div>
 
     <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
     </div>
