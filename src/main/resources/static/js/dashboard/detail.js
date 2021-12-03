@@ -1,45 +1,173 @@
 let rubChar = "₽"
 let monthId;
+
 let lastMonthData;
 let prevMonthData;
+let prevPrevMonthData;
+
 let lastCalcData;
 let prevCalcData;
+
 let tariffsData;
 
+let total;
+let prevTotal;
+let totalCommunal
+let prevTotalCommunal
+
 function initCharts() { 
-    const communalsLabels = [
+    // Communal chart
+    const communalChartLabels = [
         'Горячая вода',
         'Холодная вода',
         'Электричество',
         'Водоотведение',
     ];
-    const communalsData = {
-        labels: communalsLabels,
-        datasets: [{
-            label: 'Платежи по категориям',
-            backgroundColor: [
-                'rgb(232, 66, 44)',
-                'rgb(97, 192, 255)',
-                'rgb(224, 240, 122)',
-                'rgb(160, 110, 49)',
-            ],
-            data: [
-                lastCalcData['hotwater'], 
-                lastCalcData['coldwater'], 
-                lastCalcData['electricity'], 
-                lastCalcData['drainage']
-            ],
-        }]
+    const communalChartData = {
+        labels: communalChartLabels,
+        datasets: [
+            {
+                label: 'Текущий месяц',
+                backgroundColor: 'rgb(99, 242, 192)',
+                data: [
+                    lastCalcData['hotwater'], 
+                    lastCalcData['coldwater'], 
+                    lastCalcData['electricity'], 
+                    lastCalcData['drainage']
+                ],
+            },
+            {
+                label: 'Прошлый месяц',
+                backgroundColor: 'rgb(80, 198, 241)',
+                data: [
+                    prevCalcData['hotwater'], 
+                    prevCalcData['coldwater'], 
+                    prevCalcData['electricity'], 
+                    prevCalcData['drainage']
+                ],
+            }
+        ]
     };
-    const communalsConfig = {
-        type: 'pie',
-        data: communalsData,
-        options: {}
+    const communalChartConfig = {
+        type: 'bar',
+        data: communalChartData,
+        options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Сравнение сумм коммунальных платежей'
+              }
+            }
+          }
     };
-    
-    const communalsChart = new Chart(
+    const communalChart = new Chart(
         document.getElementById('communals'),
-        communalsConfig
+        communalChartConfig
+    );
+
+    // Counters chart
+    const countersChartLabels = [
+        'Горячая вода',
+        'Холодная вода',
+        'Электричество',
+        'Водоотведение',
+    ];
+    const countersChartData = {
+        labels: countersChartLabels,
+        datasets: [
+            {
+                label: 'Текущий месяц',
+                backgroundColor: 'rgb(99, 242, 192)',
+                data: [
+                    lastMonthData['hotwater'] - prevMonthData['hotwater'], 
+                    lastMonthData['coldwater']  - prevMonthData['coldwater'], 
+                    lastMonthData['electricity']  - prevMonthData['electricity'], 
+                    (lastMonthData['hotwater'] - prevMonthData['hotwater']) + (lastMonthData['coldwater']  - prevMonthData['coldwater'])
+                ],
+            },
+            {
+                label: 'Прошлый месяц',
+                backgroundColor: 'rgb(80, 198, 241)',
+                data: [
+                    prevMonthData['hotwater'] - prevPrevMonthData['hotwater'], 
+                    prevMonthData['coldwater'] - prevPrevMonthData['coldwater'], 
+                    prevMonthData['electricity'] - prevPrevMonthData['electricity'], 
+                    (prevMonthData['hotwater'] - prevPrevMonthData['hotwater']) + (prevMonthData['coldwater'] - prevPrevMonthData['coldwater'])
+                ],
+            }
+        ]
+    };
+    const countersChartConfig = {
+        type: 'bar',
+        data: countersChartData,
+        options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Сравнение потребления'
+              }
+            }
+          }
+    };
+    const countersChart = new Chart(
+        document.getElementById('counters'),
+        countersChartConfig
+    );
+
+     // Total sum chart
+     const totalChartLabels = [
+        'Сумма за месяц (с интернетом)',
+        'Сумма за месяц (без интернета)'
+    ];
+    const totalChartData = {
+        labels: totalChartLabels,
+        datasets: [
+            {
+                label: 'Текущий месяц',
+                backgroundColor: 'rgb(99, 242, 192)',
+                data: [
+                    total,
+                    total - lastMonthData['ethernet']
+                ],
+            },
+            {
+                label: 'Прошлый месяц',
+                backgroundColor: 'rgb(80, 198, 241)',
+                data: [
+                    prevTotal,
+                    prevTotal - prevMonthData['ethernet']
+                ],
+            }
+        ]
+    };
+    const totalChartConfig = {
+        type: 'bar',
+        data: totalChartData,
+        options: {
+            responsive: true,
+            indexAxis: 'y',
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Сравнение общих сумм'
+              }
+            }
+          }
+    };
+    const totalChart = new Chart(
+        document.getElementById('total'),
+        totalChartConfig
     );
 }
 
@@ -60,7 +188,6 @@ Vue.component('overview-card', {
                 '<div class="card-header">{{header}}</div>'+
                 '<div class="card-body placeholder-glow">'+
                     '<overview-card-row v-for="rowData in cardData" :title="rowData[\'title\']" :text="rowData[\'text\']" :textEnding="rowData[\'textEnding\']" :key="rowData[\'title\']"/>'+
-                    //'<overview-card-row title="Заголовок" text="23442" textEnding="р." />'+
                 '</div>'+
             '</div>'+
         '</div>'
@@ -85,28 +212,35 @@ let monthOverview = new Vue({
                 lastMonthData = response.body
                 console.log(lastMonthData)
             }, response => {
-                alert("Не удалось получить данные за прошлый месяц!")
+                toastLaunch("warning", "Ошибка", "", "Не удалось получить данные за текущий месяц!", "danger")
             })
     
             await This.$http.get('/api/monthdata/getPrev', {params: {id: lastMonthData["id"]}}).then(response => {
                 prevMonthData = response.body
                 console.log(prevMonthData)
             }, response => {
-                alert("Не удалось получить данные за позапрошлый месяц!")
+                toastLaunch("warning", "Ошибка", "", "Не удалось получить данные за прошлый месяц!", "danger")
+            })
+
+            await This.$http.get('/api/monthdata/getPrev', {params: {id: prevMonthData["id"]}}).then(response => {
+                prevPrevMonthData = response.body
+                console.log(prevPrevMonthData)
+            }, response => {
+                toastLaunch("warning", "Ошибка", "", "Не удалось получить данные за позапрошлый месяц!", "danger")
             })
     
             await This.$http.get('/api/monthdata/getCalc', {params: {id: lastMonthData["id"]}}).then(response => {
                 lastCalcData = response.body
                 console.log(lastCalcData)
             }, response => {
-                alert("Не удалось получить расчёт за прошлый месяц!")
+                toastLaunch("warning", "Ошибка", "", "Не удалось получить расчёт за текущий месяц!", "danger")
             })
     
             await This.$http.get('/api/monthdata/getCalc', {params: {id: prevMonthData["id"]}}).then(response => {
                 prevCalcData = response.body
                 console.log(prevCalcData)
             }, response => {
-                alert("Не удалось получить расчёт за позапрошлый месяц!")
+                toastLaunch("warning", "Ошибка", "", "Не удалось получить расчёт за прошлый месяц!", "danger")
             })
     
             await This.$http.get(
@@ -116,14 +250,17 @@ let monthOverview = new Vue({
                     tariffsData = response.body
                     console.log(tariffsData)
                 }, response => {
-                    alert("Не удалось получить тарифы!")
+                    toastLaunch("warning", "Ошибка", "", "Не удалось получить тарифы!", "danger")
                 })
         }(this));
 
         console.log("Данные загружены!")
 
-        let totalCommunal = lastCalcData["coldwater"] + lastCalcData["hotwater"] + lastCalcData["electricity"] + lastCalcData["drainage"];
-        let total = totalCommunal + lastMonthData["rent"] + lastMonthData["ethernet"];
+        totalCommunal = lastCalcData["coldwater"] + lastCalcData["hotwater"] + lastCalcData["electricity"] + lastCalcData["drainage"];
+        prevTotalCommunal = prevCalcData["coldwater"] + prevCalcData["hotwater"] + prevCalcData["electricity"] + prevCalcData["drainage"];
+
+        total = totalCommunal + lastMonthData["rent"] + lastMonthData["ethernet"];
+        prevTotal = prevTotalCommunal + prevMonthData["rent"] + prevMonthData["ethernet"];
 
         console.log(totalCommunal)
         console.log(total)
@@ -213,22 +350,22 @@ let monthOverview = new Vue({
 
         this.tariffsCardData.push({
             'title': "Электричество:",
-            'text': tariffsData['electricity'],
+            'text': tariffsData['electricity'].toFixed(2),
             'textEnding': rubChar
         })
         this.tariffsCardData.push({
             'title': "Горячая вода:",
-            'text': tariffsData['hotwater'],
+            'text': tariffsData['hotwater'].toFixed(2),
             'textEnding': rubChar
         })
         this.tariffsCardData.push({
             'title': "Холодная вода:",
-            'text': tariffsData['coldwater'],
+            'text': tariffsData['coldwater'].toFixed(2),
             'textEnding': rubChar
         })
         this.tariffsCardData.push({
             'title': "Водоотведение:",
-            'text': tariffsData['drainage'],
+            'text': tariffsData['drainage'].toFixed(2),
             'textEnding': rubChar
         })
         

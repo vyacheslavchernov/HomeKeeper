@@ -51,11 +51,21 @@
                         <div class="col-6">
                             <div>
                                 <canvas id="communals"></canvas>
-                              </div>
+                            </div>
                         </div>
 
                         <div class="col-6">
+                            <div>
+                                <canvas id="counters"></canvas>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <canvas id="total"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -63,6 +73,10 @@
     </div>
     </div>
 
+    <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    </div>
+
+    <script src="/resources/js/dashboard/toasts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
