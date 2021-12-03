@@ -45,7 +45,7 @@
     <div id="month-overview"></div>
     
     <div class="container-xl d-none d-xl-block">
-        <div class="ps-xl-5 pe-xl-5 pt-5" >
+        <div class="ps-xl-5 pe-xl-5 pt-5">
             <div class="card shadow-lg">
                 <div class="card-header">Сравнение с предыдущим месяцем</div>
                 <div class="card-body placeholder-glow">
@@ -55,14 +55,14 @@
                                 <canvas id="communals"></canvas>
                             </div>
                         </div>
-
+    
                         <div class="col-xl-6">
                             <div>
                                 <canvas id="counters"></canvas>
                             </div>
                         </div>
                     </div>
-
+    
                     <div class="row">
                         <div class="col-12">
                             <div>
@@ -72,25 +72,35 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-    </div>
-
-    <!-- Modal для добавления нового расчёта-->
-<div class="modal fade" id="ModalBill" tabindex="-1" aria-labelledby="ModalBillLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalBillLabel">Отчёт для отправки</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="modalBillComponent">
-                
+    
+    <!-- Modal отчёта для арендодателя-->
+    <div class="modal fade" id="ModalBill" tabindex="-1" aria-labelledby="ModalBillLabel" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalBillLabel">Отчёт для отправки</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="modalBillComponent">
+    
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+    
     <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    </div>
+
+    <div class="position-fixed top-0 start-0" id="loadSplash" style="z-index: 10; background-color: #0000005d; width: 100%; height: 100vh">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <div class="spinner-grow text-primary"></div>
+            <div class="spinner-grow text-primary"></div>
+            <div class="spinner-grow text-primary"></div>
+            <div class="spinner-grow text-primary"></div>
+        </div>
     </div>
 
     <script src="/resources/js/dashboard/toasts.js"></script>

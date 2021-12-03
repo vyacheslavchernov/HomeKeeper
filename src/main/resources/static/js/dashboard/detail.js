@@ -369,6 +369,8 @@ let monthOverview = new Vue({
             'textEnding': rubChar
         })
         
+        document.getElementById("loadSplash").setAttribute("class", "d-none")
+
         initCharts()
 
         const modalBill = new Vue({
