@@ -42,7 +42,7 @@ var app = new Vue({
                  this.monthDataList = data;
                  this.displayedData = data;
              } else {
-                 alert("Произошла ошибка при загрузке расчётов (" + responce.status + "). Данные не были получены.");
+                 toastLaunch("warning", "Ошибка", "", "Произошла ошибка при загрузке расчётов (" + responce.status + "). Данные не были получены.", "danger")
              }
     },
     template: '<table class="table table-striped table-hover"><table-head/><table-body :data="this.displayedData" /></table>'
