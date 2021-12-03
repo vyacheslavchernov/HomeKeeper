@@ -40,112 +40,32 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="row p-5">
-            <div class="col-6">
-                <div class="card shadow-lg">
-                    <div class="card-header" id="mainCardHeader">Главные цифры на <span class="placeholder col-2"></div>
-                    <div class="card-body placeholder-glow" id="mainCardBody">
-                        <p class="lead row"><span class="col-9">Сумма за месяц (с интернетом): </span><span class="badge bg-primary col-3" id="mainCardTotalSum"><span class="placeholder col-6"></span></span></p>
-                        <p class="lead row"><span class="col-9">Сумма за месяц (без интернета): </span><span class="badge bg-primary col-3" id="mainCardTotalSumWithoutEthernet"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Из этого коммунальные услуги: </span><span class="badge bg-primary col-3" id="mainCardTotalSumCommunal"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">На каждого платящего: </span><span class="badge bg-primary col-3" id="mainCardTotalSumOnPerson"><span class="placeholder col-6"></span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6">
-                <div class="card shadow-lg" style="height:100%">
-                    <div class="card-header" >Нерасчётные значения</div>
-                    <div class="card-body placeholder-glow">
-                        <p class="lead row"><span class="col-9">Рента: </span><span class="badge bg-primary col-3" id="constCardRent"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Стоимость интернета: </span><span class="badge bg-primary col-3" id="constCardEthernet"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Количество плательщиков: </span><span class="badge bg-primary col-3" id="constCardPersons"><span class="placeholder col-6"></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row p-5">
-            <div class="col-6">
-                <div class="card shadow-lg">
-                    <div class="card-header" >Коммунальные платежи</div>
-                    <div class="card-body placeholder-glow">
-                        <p class="lead row"><span class="col-9">Электричество: </span><span class="badge bg-primary col-3" id="communCardElect"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Горячая вода: </span><span class="badge bg-primary col-3" id="communCardHot"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Холодная вода: </span><span class="badge bg-primary col-3" id="communCardCold"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Водоотведение: </span><span class="badge bg-primary col-3" id="communCardDrain"><span class="placeholder col-6"></span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6">
-                <div class="card shadow-lg" style="height: 100%;">
-                    <div class="card-header" >Счётчики</div>
-                    <div class="card-body placeholder-glow">
-                        <p class="lead row"><span class="col-9">Электричество: </span><span class="badge bg-primary col-3" id="counterCardElect"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Горячая вода: </span><span class="badge bg-primary col-3" id="counterCardHot"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Холодная вода: </span><span class="badge bg-primary col-3" id="counterCardCold"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Водоотведение: </span><span class="badge bg-primary col-3" id="counterCardDrain"><span class="placeholder col-6"></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row p-5">
-            <div class="col-6">
-                <div class="card shadow-lg">
-                    <div class="card-header" >Тарифы</div>
-                    <div class="card-body placeholder-glow">
-                        <p class="lead row"><span class="col-9">Электричество: </span><span class="badge bg-primary col-3" id="tariffCardElect"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Горячая вода: </span><span class="badge bg-primary col-3" id="tariffCardHot"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Холодная вода: </span><span class="badge bg-primary col-3" id="tariffCardCold"><span class="placeholder col-6"></span></p>
-                        <p class="lead row"><span class="col-9">Водоотведение: </span><span class="badge bg-primary col-3" id="tariffCardDrain"><span class="placeholder col-6"></span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6">
-                <div class="card shadow-lg">
-                    <div class="card-header">
-                        Доступные действия
-                    </div>
-                    <ul class="list-group list-group-flush placeholder-glow">
-                        <li class="list-group-item">
-                            <a href="404" class="card-link">Сформировать отчёт</a>
-                        </li>
+    <div id="month-overview"></div>
     
-                        <li class="list-group-item">
-                            <a href="404" class="card-link">Сравнить с другим месяцем</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-        
+    <div class="container">
         <div class="p-5">
-                <div class="card shadow-lg">
-                    <div class="card-header">Сравнение с предыдущим месяцем</div>
-                    <div class="card-body placeholder-glow">
-                        <div class="row">
-                            <div class="col-6">
-                                <div>
-                                    <canvas id="communals"></canvas>
-                                  </div>
-                            </div>
+            <div class="card shadow-lg">
+                <div class="card-header">Сравнение с предыдущим месяцем</div>
+                <div class="card-body placeholder-glow">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <canvas id="communals"></canvas>
+                              </div>
+                        </div>
 
-                            <div class="col-6">
+                        <div class="col-6">
 
-                            </div>
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
+    </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="/resources/js/dashboard/detail.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
