@@ -24,6 +24,8 @@ document.getElementById("modalBillCopy").addEventListener("click", event => {
     el.select();
     document.execCommand("copy");
     document.body.removeChild(el);
+
+    toastLaunch("success", "Успешно!", "", "Текст скопирован в буфер обмена", "success")
 })
 
 function initCharts() { 
