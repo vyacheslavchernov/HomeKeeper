@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Модель данных для данных за месяц
+ */
 @Entity
 @Table
 @ToString(of = {"id"})

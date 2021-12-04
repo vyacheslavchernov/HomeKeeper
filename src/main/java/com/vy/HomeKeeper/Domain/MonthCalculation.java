@@ -2,6 +2,9 @@ package com.vy.HomeKeeper.Domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Модель данных для расчёта за месяц
+ */
 public class MonthCalculation {
     @JsonProperty("hotwater")
     private double hotwater;

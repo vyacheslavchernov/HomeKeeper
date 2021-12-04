@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Контроллер отвечающий за получение, добавление, удаление данных о месяце
+ */
 @RestController
 public class MonthDataController {
 
@@ -22,12 +25,22 @@ public class MonthDataController {
         this.tariffsRepo = tariffsRepo;
     }
 
+    /**
+     * Добавление данных о новом месяце
+     *
+     * @param monthData Данные для добавления в БД
+     * @return Добавленный объект при успехе
+     */
     @PostMapping("api/monthdata/add")
-    public boolean addMonthData(@RequestBody MonthData monthData) {
-        monthDataRepo.save(monthData);
-        return true;
+    public MonthData addMonthData(@RequestBody MonthData monthData) {
+        return monthDataRepo.save(monthData);
     }
 
+    /**
+     * Получение самого свежего месяца
+     *
+     * @return Данные месяце или null TODO: Оптимизировать поиск последнего месяца
+     */
     @GetMapping("api/monthdata/getlast")
     public MonthData lastMonthData() {
         List<MonthData> monthDataList = monthDataRepo.findAll();
@@ -57,23 +70,47 @@ public class MonthDataController {
         return lastData;
     }
 
+    /**
+     * Поиск месяца по id
+     *
+     * @param id id искомого месяца
+     * @return данные о месяце или null
+     */
     @GetMapping("api/monthdata/get")
     public MonthData getMonthData(@RequestParam String id) {
         return monthDataRepo.findById(id).orElse(null);
 
     }
 
+    /**
+     * Получить данные за все доступные месяца
+     *
+     * @return Массив всех доступных данных TODO: Реализовать порционную выдачу и динамическую подгрузку на фронте
+     */
     @GetMapping("api/monthdata/all")
     public List<MonthData> getMonthData() {
         return monthDataRepo.findAll();
 
     }
 
+    /**
+     * Получение рассчитанных значений по данным за месяц
+     *
+     * @param id id месяца для расчёта
+     * @return рассчитанные значения или null
+     */
     @GetMapping("api/monthdata/getCalc")
     public MonthCalculation getMonthCalc(@RequestParam String id) {
+        // TODO: Перенести все расчёты с фронта на бэк - общие суммы и т.д.
         return Utils.Calculator.calculate(monthDataRepo.getById(id), monthDataRepo, tariffsRepo);
     }
 
+    /**
+     * Получение данных за предыдущий месяца от указанного
+     *
+     * @param id id месяца от которого идёт поиск
+     * @return данные за месяц или null
+     */
     @GetMapping("api/monthdata/getPrev")
     public MonthData getPrevMonthData(@RequestParam String id) {
         MonthData currentMonthData = monthDataRepo.getById(id);

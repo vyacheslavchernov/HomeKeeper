@@ -1,3 +1,5 @@
+// Переработать страницу на vue
+
 document.getElementById("modalMonthDataSave").addEventListener("click", async function () {
     let month = document.getElementById("month").value;
     document.getElementById("month").value = '';

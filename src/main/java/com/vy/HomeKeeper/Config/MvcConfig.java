@@ -13,6 +13,9 @@ public class MvcConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         return new Class[]{SpringConfig.class};
     }
 
+    /**
+     * Конфигурация роутера для работы MVC
+     */
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
