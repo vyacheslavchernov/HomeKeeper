@@ -72,22 +72,7 @@
         <div class="row p-xl-5">
             <!-- Данные последнего месяца -->
             <div class="col-xl-6 mt-3 mt-xl-0">
-                <div class="card shadow-lg">
-                    <div class="card-header">Расчёты</div>
-                    <div class="card-body placeholder-glow">
-                        <h6 class="card-subtitle mb-2 text-muted" id="lastMonthShortReportTitle">Последний расчёт <span
-                                class="placeholder placeholder-glow col-2"></span>:</h6>
-                        <p class="card-text" id="lastMonthShortReportBody">
-                            <span class="placeholder col-7"></span><br>
-                            <span class="placeholder col-5"></span><br>
-                            <span class="placeholder col-7"></span><br>
-                            <span class="placeholder col-3"></span> <span class="placeholder col-4"></span><br>
-                        </p>
-                        <a href="" class="btn btn-outline-primary" id="checkDetailReport">Подробная информация</a>
-                        <br>
-                        <a href="/dashboard/list" class="card-link">Другие отчёты</a>
-                    </div>
-                </div>
+                <div id="lastMonthData"></div>
             </div>
 
             <!-- Другие дашборды -->
@@ -199,9 +184,7 @@
     <div class="modal fade" id="ModalAddTariffs" tabindex="-1" aria-labelledby="ModalAddTariffsLabel" aria-hidden="true"
         data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content" id="addTariffsModule">
-
-            </div>
+            <div id="addTariffsModule"></div>
         </div>
     </div>
 
@@ -209,6 +192,7 @@
     <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
     <script src="/resources/js/dashboard/toasts.js"></script>
     <script src="/resources/js/dashboard/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"

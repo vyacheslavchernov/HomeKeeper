@@ -228,7 +228,7 @@ let monthOverview = new Vue({
 
         // Функция загрузки всех необходимых данных. 
         // Добавленны await для невозможноти использованеия ещё не загруженных данных.
-        // Есть возможность оптимизиции использования await и проведения некоторых операций параллельно.
+        // TODO: Есть возможность оптимизиции использования await и проведения некоторых операций параллельно
         await (async function(This) {
             await This.$http.get('/api/monthdata/get', {params: {id: monthId}}).then(response => {
                 lastMonthData = response.body

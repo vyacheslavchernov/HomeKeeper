@@ -1,4 +1,5 @@
 // Переработать страницу на vue
+let rubChar = "₽"
 
 document.getElementById("modalMonthDataSave").addEventListener("click", async function () {
     let month = document.getElementById("month").value;
@@ -65,91 +66,108 @@ document.getElementById("modalMonthDataSave").addEventListener("click", async fu
     }
 });
 
-window.onload = async function () {
-    let response = await fetch('/api/monthdata/getlast', {
-        method: 'GET',
-        credentials: 'include'
-    });
+// Компонент карточки обзора последнего месяца
+let lastMonthData = new Vue({
+    el: "#lastMonthData",
+    data: {
+        rubChar: rubChar,
+        year: "",
+        month: "",
+        rent: "",
+        ethernet: "",
+        communals: "",
+        total: "",
+        id: ""
+    },
+    created: async function() {
+        let lastMonthData;
+        let lastCalcData;
 
-    let responce = await response;
-    let lastMonth;
-    let calcData;
+        await this.$http.get('/api/monthdata/getlast').then(response => {
+            lastMonthData = response.body
+            console.log(lastMonthData)
+        }, response => {
+            toastLaunch("warning", "Ошибка", "", "Не удалось получить данные за последний месяц!", "danger")
+        })
+        
+        await this.$http.get('/api/monthdata/getCalc', {params: {id: lastMonthData["id"]}}).then(response => {
+            lastCalcData = response.body
+            console.log(lastCalcData)
+        }, response => {
+            toastLaunch("warning", "Ошибка", "", "Не удалось получить расчёт за последний месяц!", "danger")
+        })
 
-    if (responce.ok) {
-        lastMonth = await response.json();
-        console.log(lastMonth)
-
-        document.getElementById("lastMonthShortReportTitle").innerHTML = "Последний расчёт 10." + lastMonth["month"] + "." + lastMonth["year"] + ":";
-        document.getElementById("checkDetailReport").setAttribute("href", "/dashboard/list/detail?id=" + lastMonth['id'])
-
-        response = await fetch('/api/monthdata/getCalc?id=' + lastMonth["id"], {
-            method: 'GET',
-            credentials: 'include'
-        });
-
-        if (responce.ok) {
-            try { calcData = await response.json() } catch { window.location.href = "/error" };
-            console.log(calcData)
-
-            let totalCommunal = calcData["coldwater"] + calcData["hotwater"] + calcData["electricity"] + calcData["drainage"];
-            let total = totalCommunal + lastMonth["rent"] + lastMonth["ethernet"];
-
-            document.getElementById("lastMonthShortReportBody").innerHTML =
-                "Рента: <i>" + lastMonth["rent"].toFixed(2) + "</i> руб. <br>" +
-                "Интернет: <i>" + lastMonth["ethernet"].toFixed(2) + "</i> руб. <br>" +
-                "Коммунальные платежи: <i>" + totalCommunal.toFixed(2) + "</i> руб. <br>" +
-                "Всего: <i>" + total.toFixed(2) + "</i> руб. <br>"
-        } else {
-            alert("Произошла ошибка при расчёте последнего месяца(" + responce.status + "). Данные не были получены.")
+        this.year = lastMonthData['year']
+        this.month = lastMonthData['month']
+        this.rent = lastMonthData['rent']
+        this.ethernet = lastMonthData['ethernet']
+        this.communals = lastCalcData["coldwater"] + lastCalcData["hotwater"] + lastCalcData["electricity"] + lastCalcData["drainage"];
+        this.total = this.communals + lastMonthData["rent"] + lastMonthData["ethernet"];
+        this.id = lastMonthData['id']
+    },
+    methods: {
+        goDetail: function () {
+            window.location.href = "/dashboard/list/detail?id=" + this.id
         }
-    } else {
-        alert("Произошла ошибка при загрузке данных последнего месяца(" + responce.status + "). Данные не были загружены.")
-    }
-}
+    },
+    template: 
+    '<div class="card shadow-lg">'+
+        '<div class="card-header">Расчёты</div>'+
 
+        '<div class="card-body placeholder-glow">'+
+            '<h6 class="card-subtitle mb-2 text-muted">Последний расчёт : 10.{{month}}.{{year}}</h6>'+
+            '<p class="card-text">'+
+                'Рента: {{rent}}{{rubChar}}<br>'+
+                'Интернет: {{ethernet}}{{rubChar}}<br>'+
+                'Коммунальные платежи: {{communals}}{{rubChar}}<br>'+
+                'Всего: {{total}}{{rubChar}}<br>'+
+           '</p>'+
+
+            '<a v-on:click="goDetail" class="btn btn-outline-primary">Подробная информация</a>'+
+            '<br>'+
+            '<a href="/dashboard/list" class="card-link">Другие отчёты</a>'+
+        '</div>'+
+    '</div>'
+})
+
+// Компонент модала добавления новых тарифов
 let modalAddTariffs = new Vue({
     el: '#addTariffsModule',
     data: {
-        year: null,
-        half: null,
-        hotwater: null,
-        coldwater: null,
-        electricity: null,
-        drainage: null
+        tariffs: {
+            'id': null,
+            'year': null,
+            'halffOfYear': null,
+            'hotwater': null,
+            'coldwater': null,
+            'electricity': null,
+            'drainage': null
+        }  
     },
     methods: {
-        addNewTariff: async function () {
-
-            let tariffs = {
-                'id': parseInt(this.year + this.half),
-                'halffOfYear': this.half,
-                'year': this.year,
-                'hotwater': this.hotwater,
-                'coldwater': this.coldwater,
-                'electricity': this.electricity,
-                'drainage': this.drainage
-            };
-
-            this.year = null
-            this.half = null
-            this.hotwater = null
-            this.coldwater = null
-            this.electricity = null
-            this.drainage = null
-        
+        addNewTariff: async function () {   
+            this.tariffs['id'] = parseInt(this.tariffs['year'] + this.tariffs['halffOfYear'])
+            
             let response = await fetch('api/tariffs/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 credentials: 'include',
-                body: JSON.stringify(tariffs)
+                body: JSON.stringify(this.tariffs)
             });
         
             let result = await response;
         
             if (result.ok) {
                 toastLaunch("success", "Успех", "", "Тарифы ушпешно обновлены!", "success")
+
+                this.tariffs['year'] = null
+                this.tariffs['halffOfYear'] = null
+                this.tariffs['hotwater'] = null
+                this.tariffs['coldwater'] = null
+                this.tariffs['electricity'] = null
+                this.tariffs['drainage'] = null
             } else {
                 toastLaunch(
                     "warning", 
@@ -172,32 +190,32 @@ let modalAddTariffs = new Vue({
             '<form id="modalAddTariffsForm">'+
                 '<div class="mb-3">'+
                     '<label for="yearTariff" class="form-label">Год</label>'+
-                    '<input v-model="year" type="number" class="form-control" id="yearTariff">'+
+                    '<input v-model="tariffs[\'year\']" type="number" class="form-control" id="yearTariff">'+
                 '</div>'+
 
                 '<div class="mb-3">'+
                     '<label for="halfTariff" class="form-label">Половина года (1/2 - первая/вторая)</label>'+
-                    '<input v-model="half" type="number" class="form-control" id="halfTariff">'+
+                    '<input v-model="tariffs[\'halffOfYear\']" type="number" class="form-control" id="halfTariff">'+
                 '</div>'+
 
                 '<div class="mb-3">'+
                     '<label for="hotwaterTariff" class="form-label">Горячая вода</label>'+
-                    '<input v-model="hotwater" type="number" class="form-control" id="hotwaterTariff">'+
+                    '<input v-model="tariffs[\'hotwater\']" type="number" class="form-control" id="hotwaterTariff">'+
                 '</div>'+
 
                 '<div class="mb-3">'+
                     '<label for="coldwaterTariff" class="form-label">Холодная вода</label>'+
-                    '<input v-model="coldwater" type="number" class="form-control" id="coldwaterTariff">'+
+                    '<input v-model="tariffs[\'coldwater\']" type="number" class="form-control" id="coldwaterTariff">'+
                 '</div>'+
 
                 '<div class="mb-3">'+
                     '<label for="electricityTariff" class="form-label">Электричество</label>'+
-                    '<input v-model="electricity" type="number" class="form-control" id="electricityTariff">'+
+                    '<input v-model="tariffs[\'electricity\']" type="number" class="form-control" id="electricityTariff">'+
                 '</div>'+
 
                 '<div class="mb-3">'+
                     '<label for="drainageTariff" class="form-label">Водоотведение</label>'+
-                    '<input v-model="drainage" type="number" class="form-control" id="drainageTariff">'+
+                    '<input v-model="tariffs[\'drainage\']" type="number" class="form-control" id="drainageTariff">'+
                 '</div>'+
             '</form>'+
         '</div>'+
@@ -207,4 +225,4 @@ let modalAddTariffs = new Vue({
             '<button v-on:click="addNewTariff" type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modalTariffsSave">Сохранить</button>'+
         '</div>'+
     '</div>'
-  })
+})
