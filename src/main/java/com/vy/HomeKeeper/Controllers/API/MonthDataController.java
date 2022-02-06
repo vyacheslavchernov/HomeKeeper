@@ -1,7 +1,9 @@
 package com.vy.HomeKeeper.Controllers.API;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.vy.HomeKeeper.Domain.MonthCalculation;
 import com.vy.HomeKeeper.Domain.MonthData;
+import com.vy.HomeKeeper.Domain.Views;
 import com.vy.HomeKeeper.Repo.MonthDataRepo;
 import com.vy.HomeKeeper.Repo.TariffsRepo;
 import com.vy.HomeKeeper.Utils;
@@ -91,6 +93,17 @@ public class MonthDataController {
     public List<MonthData> getMonthData() {
         return monthDataRepo.findAll();
 
+    }
+
+    /**
+     * Получить все ID месяцев из БД
+     *
+     * @return Список ID всех месяцев из БД
+     */
+    @GetMapping("api/monthdata/allId")
+    @JsonView(Views.onlyId.class)
+    public List<MonthData> getMonthDataId() {
+        return monthDataRepo.findAll();
     }
 
     /**
