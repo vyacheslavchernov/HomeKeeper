@@ -1,4 +1,4 @@
-package com.vy.HomeKeeper.Controllers.API;
+package com.vy.HomeKeeper.Controllers.API.RentCalculator;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.vy.HomeKeeper.Domain.MonthCalculation;

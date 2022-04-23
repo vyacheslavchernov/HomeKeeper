@@ -1,4 +1,4 @@
-package com.vy.HomeKeeper.Controllers.API;
+package com.vy.HomeKeeper.Controllers.API.RentCalculator;
 
 import com.vy.HomeKeeper.Domain.Tariffs;
 import com.vy.HomeKeeper.Repo.TariffsRepo;
