@@ -1,15 +1,15 @@
 .color-navy {
-    color: #487BA6;
+    color: #487BA6 !important;
 }
 
 .color-grey {
-    color: #333333;
+    color: #333333 !important;
 }
 
 .color-white {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .color-lightgray {
-    color: #999999;
+    color: #999999 !important;
 }
