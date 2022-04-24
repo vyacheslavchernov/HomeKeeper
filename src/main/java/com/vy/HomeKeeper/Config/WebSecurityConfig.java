@@ -38,7 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/dashboard/**").hasRole("ADMIN")
                 .antMatchers("/**", "/js/**", "/css/**", "/resources/**").permitAll()
-                .and().formLogin()
+                .and().formLogin().permitAll()
+                .loginPage("/login")
+                .loginProcessingUrl("/perform-login")
+                .usernameParameter("user")
+                .passwordParameter("pass")
+                .defaultSuccessUrl("/dashboard")
+                .failureUrl("/login?error=true")
+                .and().logout().logoutSuccessUrl("/")
                 .and().cors().and().csrf().disable();
     }
 

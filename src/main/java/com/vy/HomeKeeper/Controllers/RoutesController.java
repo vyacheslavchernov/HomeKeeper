@@ -41,4 +41,7 @@ public class RoutesController {
     public String dashboardListDetail() {
         return "dashboard/detail";
     }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() { return "login"; }
 }

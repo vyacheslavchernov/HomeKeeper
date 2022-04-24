@@ -119,7 +119,7 @@
 
 @media (max-width: 720px) {
     :root {
-        --large-font-size: 12vw;
+        --large-font-size: 10vw;
     }
 
     .img-background {
@@ -127,22 +127,20 @@
     }
 
     .welcome-block {
-        padding-left: 0;
-        padding-top: 50px;
-        padding-right: 0;
-
-        text-align: center;
+        padding: 0;
+        margin-top: 50px;
     }
 
     .page-wrapper {
-        padding: 5px;
-    }
-
-    .logo-type {
-        text-align: center;
+        padding-top: 50px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .auth-block {
+        width: calc(100% - 30px);
+        height: 150px;
+
         position: fixed;
 
         bottom: 10%;

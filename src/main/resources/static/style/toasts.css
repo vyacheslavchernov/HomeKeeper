@@ -1,0 +1,9 @@
+.toast {
+    border: 0 !important;
+}
+
+@media (max-width: 720px) {
+    .toast {
+        width: calc(100vw - 30px);
+    }
+}

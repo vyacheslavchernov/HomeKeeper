@@ -1,5 +1,5 @@
 .bg-pink-pastel {
-    background-color: #FAEAE0 !important;
+    background-color: #FAEAE0;
 }
 
 .bg-wwhite {
@@ -8,4 +8,14 @@
 
 .bg-navy {
     background-color: #487BA6 !important;
+}
+
+.btn-navy {
+    background-color: #487BA6 !important;
+    border-color: #487BA6 !important;
+}
+
+.btn-navy:hover {
+    background-color: #375a77 !important;
+    border-color: #375a77 !important;
 }
