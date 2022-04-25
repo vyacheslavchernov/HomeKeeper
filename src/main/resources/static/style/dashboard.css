@@ -1,5 +1,12 @@
-.logo-type {
-    font-size: var(--medium-font-size);
+:root {
+    --larger-font-size: 2.6rem;
+    --medium-font-size: 2rem;
+}
+
+.page-wrapper {
+    padding-left: 112px;
+    padding-right: 112px;
+    padding-top: 50px;
 }
 
 nav {
@@ -10,7 +17,7 @@ nav {
     background-color: #FFFFFF !important;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 
-    padding-left: 100px;
+    padding-left: 88px;
 }
 
 .logout-link {
@@ -19,15 +26,71 @@ nav {
     text-align: right;
 }
 
+.card-solid {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    margin-right: 32px;
+
+    width: 300px !important;
+    height: 150px;
+    transform: scale(1);
+
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+
+    transition: 0.7s;
+}
+
+.card-solid.clickable:hover{
+    transform: scale(1.1);
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.top-row {
+    width: 100%;
+    height: 50%;
+}
+
+.bottom-row {
+    width: 100%;
+    height: 50%;
+    font-size: var(--larger-font-size);
+}
+
 @media (max-width: 720px) {
     nav {
         height: fit-content;
         padding-left: 15px;
         padding-right: 15px;
     }
-}
 
-.logout-link {
-    position: initial;
-    text-align: left;
+    .logout-link {
+        position: initial;
+        text-align: left;
+    }
+
+    .page-wrapper {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 50px;
+    }
+
+    .row {
+        width: 100% !important;
+        margin-left: 50% !important;
+        transform: translateX(-50%);
+    }
+
+    .card-solid {
+        height: auto;
+        width: 100% !important;
+    }
+
+    .gy-5 {
+        --bs-gutter-y: 1.5rem !important;
+    }
 }

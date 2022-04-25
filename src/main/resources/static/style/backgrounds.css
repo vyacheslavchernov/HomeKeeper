@@ -14,6 +14,14 @@
     background-color: #F9F9F9 !important;
 }
 
+.bg-green {
+    background-color: #78DA9F !important;
+}
+
+.br-gray {
+    border-color: #BABABA !important;
+}
+
 .btn-navy {
     background-color: #487BA6 !important;
     border-color: #487BA6 !important;

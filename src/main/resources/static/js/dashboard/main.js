@@ -111,22 +111,9 @@ let lastMonthData = new Vue({
         }
     },
     template: 
-    '<div class="card shadow-lg">'+
-        '<div class="card-header">Расчёты</div>'+
-
-        '<div class="card-body placeholder-glow">'+
-            '<h6 class="card-subtitle mb-2 text-muted">Последний расчёт : 10.{{month}}.{{year}}</h6>'+
-            '<p class="card-text">'+
-                'Рента: {{rent}}{{rubChar}}<br>'+
-                'Интернет: {{ethernet}}{{rubChar}}<br>'+
-                'Коммунальные платежи: {{communals}}{{rubChar}}<br>'+
-                'Всего: {{total}}{{rubChar}}<br>'+
-           '</p>'+
-
-            '<a v-on:click="goDetail" class="btn btn-outline-primary">Подробная информация</a>'+
-            '<br>'+
-            '<a href="/dashboard/list" class="card-link">Другие отчёты</a>'+
-        '</div>'+
+    '<div v-on:click="goDetail" class="card-solid bg-green color-white clickable col-3">'+
+        '<div class="top-row comfortaa-bold">Последний<br>расчёт (10.{{month}}.{{year}})</div>'+
+        '<div class="bottom-row nunito-extrabold">{{total}}{{rubChar}}</div>'+
     '</div>'
 })
 
@@ -222,7 +209,7 @@ let modalAddTariffs = new Vue({
 
         '<div class="modal-footer">'+
             '<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Отмена</button>'+
-            '<button v-on:click="addNewTariff" type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modalTariffsSave">Сохранить</button>'+
+            '<button v-on:click="addNewTariff" type="button" class="btn btn-primary btn-navy" data-bs-dismiss="modal" id="modalTariffsSave">Сохранить</button>'+
         '</div>'+
     '</div>'
 })
