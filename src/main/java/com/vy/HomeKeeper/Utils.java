@@ -6,10 +6,24 @@ import com.vy.HomeKeeper.Domain.Tariffs;
 import com.vy.HomeKeeper.Repo.MonthDataRepo;
 import com.vy.HomeKeeper.Repo.TariffsRepo;
 
+/**
+ * Различные операции реализованные через статические объекты и часто используемые фрагменты кода
+ */
 public class Utils {
 
 
+    /**
+     * Класс для произведения расчётов по месяцу
+     */
     public static class Calculator {
+        /**
+         * Производит расчёт сумм на основе данных за месяц и тарифов
+         *
+         * @param currentMonthData данные месяца для расчёта
+         * @param monthDataRepo репозиторий с данными за месяц
+         * @param tariffsRepo репозиторий с данными по тарифам
+         * @return рассчитанные данные за месяц или null
+         */
         public static MonthCalculation calculate(MonthData currentMonthData, MonthDataRepo monthDataRepo, TariffsRepo tariffsRepo) {
             Long currentYear = currentMonthData.getYear();
             Long currentMonth = currentMonthData.getMonth();

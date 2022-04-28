@@ -1,3 +1,5 @@
+// TODO: Создание toasts без ручного добавления родительского контейнера на страницу (поиск и создание по отсутствии)
+// Формирует toast на основе переданных аргументов и запускает его
 function toastLaunch(icon, largeHeader, smallHeader, text, color) {
     let id = "toast" + Date.now()
     document.getElementById("toastContainer").innerHTML += toastBuilder(
@@ -11,6 +13,7 @@ function toastLaunch(icon, largeHeader, smallHeader, text, color) {
     new bootstrap.Toast(document.getElementById(id)).show()
 }
 
+// Формирует toast и прикрепляет его к странице (не виден без запуска)
 function toastBuilder(icon, largeHeader, smallHeader, text, id, color) {
 
     let toastColors = {

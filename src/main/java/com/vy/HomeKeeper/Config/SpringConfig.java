@@ -24,6 +24,9 @@ public class SpringConfig implements WebMvcConfigurer {
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * Конфигурация папки содержащей шаблоны представлений
+     */
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -33,6 +36,9 @@ public class SpringConfig implements WebMvcConfigurer {
         return templateResolver;
     }
 
+    /**
+     * Инициализация шаблонизатора
+     */
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
@@ -41,6 +47,9 @@ public class SpringConfig implements WebMvcConfigurer {
         return templateEngine;
     }
 
+    /**
+     * Установка шаблонизатора
+     */
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
@@ -48,6 +57,9 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
+    /**
+     * Настройка путей ресурсов
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static/");

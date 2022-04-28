@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HomeKeeper - Авторизация</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/resources/style/backgrounds.css">
+    <link rel="stylesheet" href="/resources/style/fonts.css">
+    <link rel="stylesheet" href="/resources/style/font-colors.css">
+    <link rel="stylesheet" href="/resources/style/login.css">
+    <link rel="stylesheet" href="/resources/style/toasts.css">
+</head>
+<body class= "bg-pink-pastel">
+
+    <div class="form-wrapper">
+        <div class="logo-type comfortaa-bold"><span class="color-navy">HOME</span><span class="color-gray">KEEPER</span></div>
+        <span class="label-large color-grey comfortaa-bold">АВТОРИЗАЦИЯ</span><br>
+        <span class="label-small color-lightgray comfortaa-regular">нет аккаунта?<br>тогда следует <a href="">зарегистрироваться</a></span>
+        <form name='f' action="/perform-login" method='POST'>
+            <label for="user" class="form-label comfortaa-regular color-grey">ЛОГИН</label>
+            <input id = "user" class="form-control comfortaa-regular" type='text' name='user' value=''>
+
+            <label for="pass" class="form-label comfortaa-regular color-grey">ПАРОЛЬ</label>
+            <input id = "pass" class="form-control comfortaa-regular" type='password' name='pass' />
+
+            <input class="btn btn-primary comfortaa-regular btn-navy" name="submit" type="submit" value="АВТОРИЗОВАТЬСЯ" />
+         </form>
+    </div>
+   
+    <!-- Родительский контейнер дял toasts -->
+    <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3 comfortaa-regular" style="z-index: 11">
+    </div>
+
+    <script src="/resources/js/dashboard/toasts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let url_string = window.location.href
+        let url = new URL(url_string);
+        error = url.searchParams.get("error");
+
+        if (error) {
+            toastLaunch(
+                "warning", 
+                "Ошибка", 
+                "", 
+                "Неверные логин и\\или пароль!", 
+                "danger"
+            );
+        }   
+    </script>
+</body>
+</html>

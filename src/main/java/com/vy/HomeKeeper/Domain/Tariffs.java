@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Модель данных для тарифов
+ */
 @Entity
 @Table
 @ToString(of = {"id"})

@@ -1,0 +1,33 @@
+.bg-pink-pastel {
+    background-color: #FAEAE0;
+}
+
+.bg-wwhite {
+    background-color: #FFFFFF !important;
+}
+
+.bg-navy {
+    background-color: #487BA6 !important;
+}
+
+.bg-lightgray {
+    background-color: #F9F9F9 !important;
+}
+
+.bg-green {
+    background-color: #78DA9F !important;
+}
+
+.br-gray {
+    border-color: #BABABA !important;
+}
+
+.btn-navy {
+    background-color: #487BA6 !important;
+    border-color: #487BA6 !important;
+}
+
+.btn-navy:hover {
+    background-color: #375a77 !important;
+    border-color: #375a77 !important;
+}

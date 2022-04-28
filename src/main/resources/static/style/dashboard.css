@@ -1,0 +1,127 @@
+:root {
+    --larger-font-size: 2.6rem;
+    --medium-font-size: 2rem;
+    --regular-font-size: 1rem;
+}
+
+.page-wrapper {
+    padding-left: 112px;
+    padding-right: 112px;
+    padding-top: 50px;
+}
+
+nav {
+    position: relative;
+
+    height: 100px;
+
+    background-color: #FFFFFF !important;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+
+    padding-left: 88px;
+}
+
+.logout-link {
+    position: absolute;
+    right: 100px;
+    text-align: right;
+}
+
+.card-solid {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    margin-right: 32px;
+
+    width: 300px !important;
+    height: 150px;
+    transform: scale(1);
+
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+
+    transition: 0.7s;
+}
+
+.card-solid.clickable:hover{
+    transform: scale(1.1);
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.top-row {
+    width: 100%;
+    height: 50%;
+}
+
+.bottom-row {
+    width: 100%;
+    height: 50%;
+    font-size: var(--larger-font-size);
+}
+
+.card {
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-header {
+    border-bottom: none !important;
+    background-color: rgba(0,0,0,.02) !important;
+}
+
+.badge {
+    position: relative !important;
+}
+
+.badge span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.regular-font-size {
+    font-size: var(--regular-font-size) !important;
+}
+
+@media (max-width: 720px) {
+    .badge {
+        padding-top: 33px !important;
+    }
+
+    nav {
+        height: fit-content;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .logout-link {
+        position: initial;
+        text-align: left;
+    }
+
+    .page-wrapper {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 50px;
+    }
+
+    .row {
+        width: 100% !important;
+        margin-left: 50% !important;
+        transform: translateX(-50%);
+    }
+
+    .card-solid {
+        height: auto;
+        width: 100% !important;
+    }
+
+    .gy-5 {
+        --bs-gutter-y: 1.5rem !important;
+    }
+}

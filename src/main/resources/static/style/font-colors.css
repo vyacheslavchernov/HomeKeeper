@@ -1,0 +1,35 @@
+.color-navy {
+    color: #487BA6 !important;
+}
+
+.color-grey {
+    color: #333333 !important;
+}
+
+.color-white {
+    color: #FFFFFF !important;
+}
+
+.color-lightgray {
+    color: #999999 !important;
+}
+
+.link-white {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.link-white:link {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.link-white:visited {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.link-white:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+}

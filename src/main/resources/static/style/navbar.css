@@ -1,0 +1,29 @@
+.navbar-light .navbar-toggler {
+    border-color: rgba(0, 0, 0, 0) !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.1rem !important;
+}
+
+.signout-icon {
+    display: inline-block !important;
+}
+
+.signout-label {
+    display: none !important;
+}
+
+.logout-link.left {
+    position: static !important;
+}
+
+@media (max-width: 720px) {
+    .signout-icon {
+        display: none !important;
+    }
+    
+    .signout-label {
+        display: block !important;
+    }
+}

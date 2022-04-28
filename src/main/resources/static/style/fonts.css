@@ -1,0 +1,26 @@
+@font-face {
+    font-family: "Comfortaa-Bold";
+    src: url("/resources/fonts/Comfortaa-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Comfortaa-Regular";
+    src: url("/resources/fonts/Comfortaa-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Nunito-ExtraBold";
+    src: url("/resources/fonts/Nunito-ExtraBold.ttf");
+}
+
+.comfortaa-bold {
+    font-family: "Comfortaa-Bold";
+}
+
+.comfortaa-regular {
+    font-family: "Comfortaa-Regular";
+}
+
+.nunito-extrabold {
+    font-family: "Nunito-ExtraBold";
+}

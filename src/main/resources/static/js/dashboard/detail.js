@@ -15,6 +15,7 @@ let prevTotal;
 let totalCommunal
 let prevTotalCommunal
 
+// Обработчик кнопки модала отчёта арендодатетелю. Производит копирование отчёта в буфер обмена. 
 document.getElementById("modalBillCopy").addEventListener("click", event => {
     const el = document.createElement("textarea");
     let billText = document.getElementById("billBody").innerHTML;
@@ -28,6 +29,7 @@ document.getElementById("modalBillCopy").addEventListener("click", event => {
     toastLaunch("success", "Успешно!", "", "Текст скопирован в буфер обмена", "success")
 })
 
+// Инициализация графиков на странице
 function initCharts() { 
     // Communal chart
     const communalChartLabels = [
@@ -184,20 +186,22 @@ function initCharts() {
     );
 }
 
+// Компонент отвечающий за строку с данными в карточке
 Vue.component('overview-card-row', {
     props: ['title', 'text', 'textEnding'],
     template: 
     '<p class="lead row ps-2 pe-2">'+
-        '<span class="col-xl-9">{{title}}</span>'+
-        '<span class="badge bg-light text-dark col-xl-3">{{text}}{{textEnding}}</span>'+
+        '<span class="col-xl-9 regular-font-size">{{title}}</span>'+
+        '<span class="badge bg-light text-dark col-xl-3"><span>{{text}}{{textEnding}}</span></span>'+
     '</p>'
 })
 
+// Карточка с данными расположенными построчно
 Vue.component('overview-card', {
     props: ['header', 'cardData'],
     template: 
         '<div class="col-xl-6 mt-3">'+
-            '<div class="card shadow-lg" style="height:100%">'+
+            '<div class="card" style="height:100%">'+
                 '<div class="card-header">{{header}}</div>'+
                 '<div class="card-body placeholder-glow">'+
                     '<overview-card-row v-for="rowData in cardData" :title="rowData[\'title\']" :text="rowData[\'text\']" :textEnding="rowData[\'textEnding\']" :key="rowData[\'title\']"/>'+
@@ -206,6 +210,7 @@ Vue.component('overview-card', {
         '</div>'
 })
 
+// Блок подробной информации о месяце. Отображает информацию в виде набора карточек.
 let monthOverview = new Vue({
     el: '#month-overview',
     data: {
@@ -216,10 +221,14 @@ let monthOverview = new Vue({
         tariffsCardData: []
     },
     created: async function() {
+        // Получение id отображаемого меяца из параметров URL
         let url_string = window.location.href
         let url = new URL(url_string);
         monthId = url.searchParams.get("id");
 
+        // Функция загрузки всех необходимых данных. 
+        // Добавлены await для невозможности использования ещё не загруженных данных.
+        // TODO: Есть возможность оптимизиции использования await и проведения некоторых операций параллельно
         await (async function(This) {
             await This.$http.get('/api/monthdata/get', {params: {id: monthId}}).then(response => {
                 lastMonthData = response.body
@@ -275,6 +284,7 @@ let monthOverview = new Vue({
         document.getElementById("loadProgress").setAttribute("style", "width:"+ 16*6 +"%")
         console.log("Данные загружены!")
 
+        // Дорасчёт данных (нужно вынести на бэк)
         totalCommunal = lastCalcData["coldwater"] + lastCalcData["hotwater"] + lastCalcData["electricity"] + lastCalcData["drainage"];
         prevTotalCommunal = prevCalcData["coldwater"] + prevCalcData["hotwater"] + prevCalcData["electricity"] + prevCalcData["drainage"];
 
@@ -283,6 +293,8 @@ let monthOverview = new Vue({
 
         console.log(totalCommunal)
         console.log(total)
+
+        // Формирование данных для карточек
 
         this.mainCardData.push({
             'title': "Сумма за месяц (с интернетом)",
@@ -388,10 +400,12 @@ let monthOverview = new Vue({
             'textEnding': rubChar
         })
         
+        // Отключение сплеша загрузки
         document.getElementById("loadSplash").setAttribute("class", "d-none")
 
         initCharts()
 
+        // Инициализация модала с отчётом для арендодателя
         const modalBill = new Vue({
             el: "#modalBillComponent",
             data: {

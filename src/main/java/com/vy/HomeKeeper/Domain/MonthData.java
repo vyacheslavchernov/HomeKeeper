@@ -1,6 +1,7 @@
 package com.vy.HomeKeeper.Domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -8,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Модель данных для данных за месяц
+ */
 @Entity
 @Table
 @ToString(of = {"id"})
@@ -15,7 +19,8 @@ import javax.persistence.Table;
 public class MonthData {
     @Id
     @JsonProperty("id")
-    private String id; // MM+YYYY -> 06 2020 = 062020
+    @JsonView(Views.onlyId.class)
+    private String id; // YYYY+MM -> 2020 06 = 202006
 
     @JsonProperty("year")
     private Long year;
