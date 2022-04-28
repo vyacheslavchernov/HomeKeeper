@@ -1,6 +1,7 @@
 :root {
     --larger-font-size: 2.6rem;
     --medium-font-size: 2rem;
+    --regular-font-size: 1rem;
 }
 
 .page-wrapper {
@@ -61,7 +62,37 @@ nav {
     font-size: var(--larger-font-size);
 }
 
+.card {
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-header {
+    border-bottom: none !important;
+    background-color: rgba(0,0,0,.02) !important;
+}
+
+.badge {
+    position: relative !important;
+}
+
+.badge span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.regular-font-size {
+    font-size: var(--regular-font-size) !important;
+}
+
 @media (max-width: 720px) {
+    .badge {
+        padding-top: 33px !important;
+    }
+
     nav {
         height: fit-content;
         padding-left: 15px;

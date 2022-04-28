@@ -191,8 +191,8 @@ Vue.component('overview-card-row', {
     props: ['title', 'text', 'textEnding'],
     template: 
     '<p class="lead row ps-2 pe-2">'+
-        '<span class="col-xl-9">{{title}}</span>'+
-        '<span class="badge bg-light text-dark col-xl-3">{{text}}{{textEnding}}</span>'+
+        '<span class="col-xl-9 regular-font-size">{{title}}</span>'+
+        '<span class="badge bg-light text-dark col-xl-3"><span>{{text}}{{textEnding}}</span></span>'+
     '</p>'
 })
 
@@ -201,7 +201,7 @@ Vue.component('overview-card', {
     props: ['header', 'cardData'],
     template: 
         '<div class="col-xl-6 mt-3">'+
-            '<div class="card shadow-lg" style="height:100%">'+
+            '<div class="card" style="height:100%">'+
                 '<div class="card-header">{{header}}</div>'+
                 '<div class="card-body placeholder-glow">'+
                     '<overview-card-row v-for="rowData in cardData" :title="rowData[\'title\']" :text="rowData[\'text\']" :textEnding="rowData[\'textEnding\']" :key="rowData[\'title\']"/>'+
